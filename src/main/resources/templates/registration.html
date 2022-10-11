@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rejestracja</title>
+    <link rel="stylesheet" th:href = "@{/css/registration_styles.css}" />
+    <link rel="stylesheet" th:href = "@{/css/main.css}" />
+</head>
+
+<body>
+<div class="center">
+    <div class=title>Rejestracja</div>
+    <form class="form" th:action="@{/rejestracja}" th:object="${registrationData}" method="post">
+        <div class="text_box">
+            <!--            <label for="name">Podaj imię:</label>-->
+            <input type="text" placeholder="imie" id="name" th:field="*{name}" >
+            <a type="text" >ERR</a>
+        </div>
+        <div class="text_box">
+            <!--            <label for="surname">Podaj nazwisko:</label>-->
+            <input type="text" placeholder="nazwisko" id="surname" th:field="*{surname}" >
+            <a type="text" >ERR</a>
+        </div>
+        <div class="text_box">
+            <!--            <label for="name">*Podaj nazwę użytkownika:</label>-->
+            <input type="text" placeholder="login" id="login" th:field="*{login}" >
+            <a type="text" >ERR</a>
+        </div>
+        <div class="text_box">
+            <!--            <label for="email">*Podaj adres e-mail:</label>-->
+            <input type="text" placeholder="e-mail" id="email" th:field="*{email}" >
+            <a type="text" >ERR</a>
+        </div>
+        <div class="text_box">
+            <!--            <label for="password">*Podaj hasło:</label>-->
+            <input type="password" placeholder="hasło" id="password" th:field="*{password}" >
+            <a type="text" >ERR</a>
+        </div>
+        <div class="text_box">
+            <!--            <label for="confirm-password">*Powtórz hasło:</label>-->
+            <input type="password" placeholder="powtórz hasło" id="confirm-password">
+            <a type="text" >ERR</a>
+        </div>
+        <input class="button" type="button" value="Utwórz konto" id="sub-button">
+        <div class="text_box">
+            <span type="text" th:text="${errMessage}"></span>
+        </div>
+        <input class="submit_button" type="submit" id="submit">
+        <div class="have_account">Masz już konto?
+            <a href="http://localhost:8081/logowanie">Zaloguj</a>
+        </div>
+        <div class="back-home">
+            <a href="http://localhost:8081">Wróć do strony głównej</a>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" th:src="@{/js/registration_validation.js}"></script>
+<script type="text/javascript" th:src="@{/js/disableEnter.js}"></script>
+
+</script>
+</body>
+
+</html>
+
+

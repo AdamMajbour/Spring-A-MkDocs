@@ -1,0 +1,23 @@
+.center {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    max-height: 60%;
+    border-radius: 10px;
+    background-color: aliceblue;
+}
+
+.info-label {
+    margin-top: 20px;
+}
+
+
+
+.submit_button {
+    visibility: hidden;
+}
+
+.btn-danger {
+    margin-top: 40px;
+}

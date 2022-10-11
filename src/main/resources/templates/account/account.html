@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" class="h-100">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Strona startowa</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/account/account-style.css}" />
+</head>
+
+<body class="d-flex flex-column h-100">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navigation">
+
+    <a class="navbar-brand" th:href="@{/loginHome}">Aplikacja treningowa</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li th:class="${activePage == 'registration'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/rejestracja}">Ćwiczenia</a>
+            </li>
+            <li class="dropdown ${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link dropbtn" th:href="@{/treningi}">Treningi</a>
+            </li>
+            <li class="dropdown ${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/ankiety}">Ankiety treningowe</a>
+            </li>
+            <li th:class="${activePage == 'registration'} ? 'nav-item active' : 'nav-item'">
+                <a id="userSettings" class="nav-link" th:href="@{/rejestracja}">Ustawienia konta</a>
+            </li>
+            <a th:href="@{/konto}">
+                <i id="userIcon" class="fas fa-user-alt" style="font-size:30px"></i>
+            </a>
+        </ul>
+    </div>
+</nav>
+<div class="cos">
+    <div class="container">
+        <form class="form" th:action="@{/konto/zmiana-hasla}" th:object="${password}" method="post">
+            <h4 class="mb-3">Ustawienia konta</h4>
+
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <h5 class="info-label">Zmień parametry ciała</h5>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-2">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input th:field="${accountInfo.height}" type="number" class="form-control" id="inputheight" placeholder="wzrost">
+                        <div id="inputheight-validation" class="invalid-feedback">Ta wartość nie może byc ujemna!!!</div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input th:field="${accountInfo.weight}" type="number" class="form-control" id="inputweight" placeholder="waga">
+                        <div id="inputweight-validation" class="invalid-feedback">Ta wartość nie może być ujemna!!!</div>
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-success mb-2" onclick="parametersButtonClicked()">Zmień parametry</button>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <h5 class="info-label">Zmień hasło</h5>
+                </div>
+            </div>
+            <div class="row g-3 rowtbottom">
+                <div class="col-sm-5">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input th:field="*{password}" id="password1" type="password" class="form-control"  placeholder="Podaj nowe hasło">
+                        <div id="password1-validation" class="invalid-feedback">Hasło powinno zawierać 8-64 znaków!!!</div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input id="password2" type="password" class="form-control"  placeholder="Powtórz hasło">
+                        <div id="password2-validation" class="invalid-feedback">Hasła muszą być takie same!!!</div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-success mb-2" onclick="passwordButtonClicked()">Zmień hasło</button>
+                </div>
+            </div>
+            <div class="row g-3 rowtbottom">
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-danger btn-lg " data-toggle="modal" data-target="#myModal">Usuń konto</button>
+                </div>
+            </div>
+            <div class="row g-3 pt-1 rowtbottom">
+                <div class="col-sm-2">
+                    <a th:href="@{/logout}">
+                        <button type="button" class="btn btn-info btn-lg ">Wyloguj się</button>
+                    </a>
+                </div>
+            </div>
+
+            <button class="submit_button " id="subb" type="submit">submit to jest -  OMG SUBMIT TO JEST</button>
+
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Czy na pewno chcesz usunąć konto? </h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="deleteButtonClicked()">Usuń konto</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<footer class="footer mt-auto py-3" th:fragment="footer">
+    <div class="container-fluid">
+            <span class="text-muted">
+                <script>
+                    document.write(new Date(Date.UTC(2021, 3, 20)).toLocaleDateString())
+                </script> - Adam Majbour-Majek, Bartłomiej Rzepka, Dominik Motyka
+            </span>
+    </div>
+</footer>
+
+<script type="text/javascript" th:src="@{/js/account/account-validation.js}">
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo " crossorigin="anonymous ">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js " integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1 " crossorigin="anonymous ">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM " crossorigin="anonymous ">
+</script>
+
+
+<script src="https://kit.fontawesome.com/cfe1d61e0f.js " crossorigin="anonymous "></script>
+
+</body>
+
+</html>

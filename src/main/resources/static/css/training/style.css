@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Consolas, serif;
+}
+
+.btn {
+    position: absolute;
+    transition: .5s ease;
+    top: 4px;
+}
+
+.btn-danger{
+    right: 1%;
+}
+
+.btn-succes{
+    right: 7%;
+    background: #009900;
+}
+
+.input {
+    border: none;
+}
+
+.input .btn-submit {
+    position: absolute;
+    right: 20%;
+}
+
+.add-button {
+    position: absolute;
+}
+
+
+

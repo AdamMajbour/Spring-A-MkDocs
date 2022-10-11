@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" class="h-100">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{css/training/style.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body class="d-flex flex-column h-100">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navigation">
+    <a class="navbar-brand" th:href="@{/loginHome}">Aplikacja treningowa</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li th:class="${activePage == 'registration'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/rejestracja}">Ćwiczenia</a>
+            </li>
+            <li class="dropdown ${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link dropbtn" th:href="@{/treningi}">Treningi</a>
+            </li>
+            <li class="dropdown ${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/ankiety}">Ankiety treningowe</a>
+            </li>
+            <li th:class="${activePage == 'registration'} ? 'nav-item active' : 'nav-item'">
+                <a id="userSettings" class="nav-link" th:href="@{/rejestracja}">Ustawienia konta</a>
+            </li>
+            <a th:href="@{/konto}">
+                <i id="userIcon" class="fas fa-user-alt" style="font-size:30px"></i>
+            </a>
+        </ul>
+    </div>
+</nav>
+
+<!--  -->
+<div class="container">
+
+        <div class="form-group">
+            <label for="trainingName">Nazwa ankiety</label>
+            <input class="form-control" id="trainingName" placeholder="Wpisz nazwę ankiety" required autocomplete="off"
+                   th:field="${trainingFormInfo.name}"
+                   type="text"/>
+        </div>
+        <div class="form-group">
+            <label for="trainingDescriprion">Opis ankiety</label>
+            <input class="form-control" id="trainingDescriprion" placeholder="Wpisz opis ankiety" required  autocomplete="off"
+                   th:field="${trainingFormInfo.description}"
+                   type="text"/>
+        </div>
+        <div class="form-group">
+            <label for="trainingFromDate">Data od</label>
+            <input class="form-control" id="trainingFromDate" placeholder="Podaj date" required autocomplete="off"
+                   th:field="${trainingFormInfo.fromDate}"
+                   type="datetime-local"/>
+        </div>
+        <div class="form-group">
+            <label for="trainingToDate">Data do</label>
+            <input class="form-control" id="trainingToDate" placeholder="Podaj date" required autocomplete="off"
+                   th:field="${trainingFormInfo.toDate}"
+                   type="datetime-local"/>
+        </div>
+        <div>
+            <button class="btn btn-succes modify-button" onclick="redirect()">Zapisz zmiany</button>
+        </div>
+
+        <div id="accordion">
+            <th:block th:each="exercise : ${trainingFormInfo.exerciseInfoList}">
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" th:href="'#collapse'+${exercise.hashCode()}" th:text="${exercise.name}"></a>
+                        <a class="btn btn-succes modify-button" th:href="'/ankiety/ankieta='+${trainingFormInfo.id}+'/cwiczenie=' + ${exercise.id}">Edytuj</a>
+                        <a class="btn btn-danger modify-button" th:href="'/ankiety/usuwanie/ankieta='+${trainingFormInfo.id}+'/cwiczenie=' + ${exercise.id}">Usuń</a>
+                    </div>
+                    <div th:id="'collapse'+${exercise.hashCode()}" class="collapse" data-parent="#accordion">
+                        <div class="card-body" th:id="'child'+${exercise.hashCode()}">
+                            <th:block th:each="series, iter : ${exercise.getSeriesInfos()}">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <a class="card-link" data-toggle="collapse" th:href="'#collapse'+${series.hashCode()}" th:text="'Seria'+${iter.count}">
+                                        </a>
+                                    </div>
+                                    <div th:id="'collapse'+${exercise.hashCode()}" class="collapse show" data-parent="#accordion">
+                                        <div class="card-body collapse" th:data-parent="'#child'+${exercise.hashCode()}" th:id="'collapse'+${series.hashCode()}">
+                                            <tr th:each="parameter : ${series.getParameterInfoList()}">
+                                                <td  th:text="${parameter.name}"></td>
+                                                <td th:text="${parameter.count}"></td>
+                                            </tr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+
+            <form class="form" method="post" th:action="'/ankiety/ankieta='+${trainingFormInfo.getId()}" th:object="${exerciseData}">
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" th:href="'#collapse'">
+                            +
+                        </a>
+                    </div>
+                    <div th:id="'collapse'" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exercise">Cwiczenie</label>
+                                <select class="form-control " id="exercise" required th:field="${exerciseData.name}">
+                                    <option hidden value="">Wybierz ćwiczenie</option>
+                                    <option
+                                            th:each="exercise : ${exerciseList}"
+                                            th:text="${exercise.name}"
+                                            th:value="${exercise.name}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="add"></label>
+                                <input class="form-control btn-succes " id="add" type="submit" value="Dodaj ćwiczenie">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form" method="post" th:action="'/ankietymove/ankieta='+${trainingFormInfo.getId()}" th:object="${exerciseMoveData}">
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" th:href="'#collapse2'">
+                            +
+                        </a>
+                    </div>
+                    <div th:id="'collapse2'" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exercise">Dodaj ćwiczenia z treningu</label>
+                                <select class="form-control " id="training" required th:field="${exerciseMoveData.trainingId}">
+                                    <option hidden value="">Wybierz trening</option>
+                                    <option
+                                            th:each="training : ${trainings}"
+                                            th:text="${training.trainingName}"
+                                            th:value="${training.id}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="add2"></label>
+                                <input class="form-control btn-succes " id="add2" type="submit" value="Dodaj">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <a th:href="'/ankiety/cyklicznosc/ankieta='+${trainingFormInfo.getId()}">
+                <button class="btn">Dodaj na kolejne 3 tygodnie</button>
+            </a>
+
+        </div>
+    </div>
+
+<footer class="footer mt-auto py-3" th:fragment="footer">
+    <div class="container-fluid">
+            <span class="text-muted">
+                <script>
+                    document.write(new Date(Date.UTC(2021, 3, 20)).toLocaleDateString())
+                </script> - Adam Majbour-Majek, Bartłomiej Rzepka, Dominik Motyka
+            </span>
+    </div>
+</footer>
+
+
+<script>
+    function redirect() {
+        var trainingName = document.getElementById("trainingName").value;
+        var trainingDescription = document.getElementById("trainingDescriprion").value;
+        var trainingFromDate = document.getElementById("trainingFromDate").value;
+        var trainingToDate = document.getElementById("trainingToDate").value;
+        window.location.replace(window.location.href+'/edycja/nazwa='+trainingName+'&&opis='+trainingDescription
+        +'&&od='+trainingFromDate+'&&do='+trainingToDate);
+    }
+</script>
+
+
+
+</body>
+
+
+</html>

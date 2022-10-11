@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+body {
+    display: flex;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.center {
+    max-width: 300px;
+    width: 100%;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+    border: 3px solid #5DBE7D;
+}
+
+.center .title {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 50px;
+}
+
+.center .text_box {
+    width: 97%;
+    margin: 15px 0;
+    position: relative;
+}
+
+.center .text_box input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    text-align: center;
+    font-size: 16px;
+    transition: all 1s ease;
+}
+
+
+.center .text_box.err input {
+    border: 2px solid red;
+}
+
+.center .text_box.succes input {
+    border: 2px solid #5DBE7D;
+}
+
+
+.center .text_box a {
+    font-size: 12px;
+    color: red;
+    position: absolute;
+    visibility: hidden;
+}
+
+.center .text_box.err a {
+    visibility: visible;
+}
+
+
+.center .text_box.succes a {
+    visibility: hidden;
+}
+
+.center .text_box span {
+    font-size: 12px;
+    color: red;
+    position: absolute;
+}
+
+.center .submit_button {
+    visibility: hidden;
+}
+
+.center .text_box .span {
+    font-size: 12px;
+    color: red;
+    position: absolute;
+}
+
+
+.center .button {
+    width: calc(97%);
+    background-color: #5DBE7D;
+    padding: 10px 5px;
+    margin: 10px 5px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.center .button input {
+    width: 100%;
+    text-align: center;
+    color: azure;
+}
+
+.center .button:hover {
+    background-color: #009900;
+    transition: all 0.5s ease;
+}
+
+.center .have_account {
+    text-align: center;
+    font-size: 16px;
+}
+
+.center .have_account a {
+    color: #009900;
+}
+
+
+.center .back-home {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.center .back-home a {
+    color: #00008b;
+}

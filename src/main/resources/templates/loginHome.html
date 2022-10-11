@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" class="h-100">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Strona startowa</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" th:href = "@{/css/main.css}" />
+</head>
+
+<body class="d-flex flex-column h-100">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navigation">
+  <a class="navbar-brand" th:href="@{/loginHome}">Aplikacja treningowa</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li th:class="${activePage == 'registration'} ? 'nav-item active' : 'nav-item'">
+        <a class="nav-link" th:href="@{/rejestracja}">Ćwiczenia</a>
+      </li>
+      <li class="dropdown ${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+        <a class="nav-link dropbtn" th:href="@{/treningi}">Treningi</a>
+      </li>
+      <li class="dropdown ${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+        <a class="nav-link" th:href="@{/ankiety}">Ankiety treningowe</a>
+      </li>
+      <li th:class="${activePage == 'registration'} ? 'nav-item active' : 'nav-item'">
+        <a id="userSettings" class="nav-link" th:href="@{/rejestracja}">Ustawienia konta</a>
+      </li>
+        <a th:href="@{/konto}">
+          <i id="userIcon" class="fas fa-user-alt" style="font-size:30px"></i>
+        </a>
+    </ul>
+  </div>
+</nav>
+<div class="calendar">
+
+  <header>
+    <button class="secondary" style="align-self: flex-start; flex: 0 0 1" onclick="setCurrentWeek()">Today</button>
+    <div class="calendar__title" style="display: flex; justify-content: center; align-items: center">
+      <div class="icon secondary chevron_left" onclick="previousWeek()">‹</div>
+      <h1 id="weekDate" class="" style="flex: 1;"></h1>
+      <div class="icon secondary chevron_right" onclick="nextWeek()">›</div>
+    </div>
+    <div style="align-self: flex-start; flex: 0 0 1"></div>
+  </header>
+
+  <div class="outer">
+
+    <table>
+      <thead>
+      <tr>
+        <th class="headcol"></th>
+        <th id="m"></th>
+        <th id="tu"></th>
+        <th id="w"></th>
+        <th id="th"></th>
+        <th id="f"></th>
+        <th id="sa" class="secondary"></th>
+        <th id="su" class="secondary"></th>
+      </tr>
+      </thead>
+    </table>
+
+    <div class="wrap">
+      <table>
+
+        <tbody>
+        <tr id="6.5">
+          <td class="headcol"></td>
+          <td id="m6.5"></td>
+          <td id="tu6.5"></td>
+          <td id="w6.5"></td>
+          <td id="th6.5"></td>
+          <td id="f6.5"></td>
+          <td id="sa6.5"></td>
+          <td id="su6.5"></td>
+        </tr>
+        <tr id="7">
+          <td class="headcol">7:00</td>
+          <td id="m7"></td>
+          <td id="tu7"></td>
+          <td id="w7"></td>
+          <td id="th7"></td>
+          <td id="f7"></td>
+          <td id="sa7"></td>
+          <td id="su7"></td>
+        </tr>
+        <tr id="7.5">
+          <td class="headcol"></td>
+          <td id="m7.5"></td>
+          <td id="tu7.5"></td>
+          <td id="w7.5"></td>
+          <td id="th7.5"></td>
+          <td id="f7.5"></td>
+          <td id="sa7.5"></td>
+          <td id="su7.5"></td>
+        </tr>
+        <tr id="8">
+          <td class="headcol">8:00</td>
+          <td id="m8"></td>
+          <td id="tu8"></td>
+          <td id="w8"></td>
+          <td id="th8"></td>
+          <td id="f8"></td>
+          <td id="sa8"></td>
+          <td id="su8"></td>
+        </tr>
+        <tr id="8.5">
+          <td class="headcol"></td>
+          <td id="m8.5"></td>
+          <td id="tu8.5"></td>
+          <td id="w8.5"></td>
+          <td id="th8.5"></td>
+          <td id="f8.5"></td>
+          <td id="sa8.5"></td>
+          <td id="su8.5"></td>
+        </tr>
+        <tr id="9">
+          <td class="headcol">9:00</td>
+          <td id="m9"></td>
+          <td id="tu9"></td>
+          <td id="w9"></td>
+          <td id="th9"></td>
+          <td id="f9"></td>
+          <td id="sa9"></td>
+          <td id="su9"></td>
+        </tr>
+        <tr id="9.5">
+          <td class="headcol"></td>
+          <td id="m9.5"></td>
+          <td id="tu9.5"></td>
+          <td id="w9.5"></td>
+          <td id="th9.5"></td>
+          <td id="f9.5"></td>
+          <td id="sa9.5"></td>
+          <td id="su9.5"></td>
+        </tr>
+        <tr id="10">
+          <td class="headcol">10:00</td>
+          <td id="m10"></td>
+          <td id="tu10"></td>
+          <td id="w10"></td>
+          <td id="th10"></td>
+          <td id="f10"></td>
+          <td id="sa10"></td>
+          <td id="su10"></td>
+        </tr>
+        <tr id="10.5">
+          <td class="headcol"></td>
+          <td id="m10.5"></td>
+          <td id="tu10.5"></td>
+          <td id="w10.5"></td>
+          <td id="th10.5"></td>
+          <td id="f10.5"></td>
+          <td id="sa10.5"></td>
+          <td id="su10.5"></td>
+        </tr>
+        <tr id="11">
+          <td class="headcol">11:00</td>
+          <td id="m11"></td>
+          <td id="tu11"></td>
+          <td id="w11"></td>
+          <td id="th11"></td>
+          <td id="f11"></td>
+          <td id="sa11"></td>
+          <td id="su11"></td>
+        </tr>
+        <tr id="11.5">
+          <td class="headcol"></td>
+          <td id="m11.5"></td>
+          <td id="tu11.5"></td>
+          <td id="w11.5"></td>
+          <td id="th11.5"></td>
+          <td id="f11.5"></td>
+          <td id="sa11.5"></td>
+          <td id="su11.5"></td>
+        </tr>
+        <tr id="12">
+          <td class="headcol">12:00</td>
+          <td id="m12"></td>
+          <td id="tu12"></td>
+          <td id="w12"></td>
+          <td id="th12"></td>
+          <td id="f12"></td>
+          <td id="sa12"></td>
+          <td id="su12"></td>
+        </tr>
+        <tr id="12.5">
+          <td class="headcol"></td>
+          <td id="m12.5"></td>
+          <td id="tu12.5"></td>
+          <td id="w12.5"></td>
+          <td id="th12.5"></td>
+          <td id="f12.5"></td>
+          <td id="sa12.5"></td>
+          <td id="su12.5"></td>
+        </tr>
+        <tr id="13">
+          <td class="headcol">13:00</td>
+          <td id="m13"></td>
+          <td id="tu13"></td>
+          <td id="w13"></td>
+          <td id="th13"></td>
+          <td id="f13"></td>
+          <td id="sa13"></td>
+          <td id="su13"></td>
+        </tr>
+        <tr id="13.5">
+          <td class="headcol"></td>
+          <td id="m13.5"></td>
+          <td id="tu13.5"></td>
+          <td id="w13.5"></td>
+          <td id="th13.5"></td>
+          <td id="f13.5"></td>
+          <td id="sa13.5"></td>
+          <td id="su13.5"></td>
+        </tr>
+        <tr id="14">
+          <td class="headcol">14:00</td>
+          <td id="m14"></td>
+          <td id="tu14"></td>
+          <td id="w14"></td>
+          <td id="th14"></td>
+          <td id="f14"></td>
+          <td id="sa14"></td>
+          <td id="su14"></td>
+        </tr>
+        <tr id="14.5">
+          <td class="headcol"></td>
+          <td id="m14.5"></td>
+          <td id="tu14.5"></td>
+          <td id="w14.5"></td>
+          <td id="th14.5"></td>
+          <td id="f14.5"></td>
+          <td id="sa14.5"></td>
+          <td id="su14.5"></td>
+        </tr>
+        <tr id="15">
+          <td class="headcol">15:00</td>
+          <td id="m15"></td>
+          <td id="tu15"></td>
+          <td id="w15"></td>
+          <td id="th15"></td>
+          <td id="f15"></td>
+          <td id="sa15"></td>
+          <td id="su15"></td>
+        </tr>
+        <tr id="15.5">
+          <td class="headcol"></td>
+          <td id="m15.5"></td>
+          <td id="tu15.5"></td>
+          <td id="w15.5"></td>
+          <td id="th15.5"></td>
+          <td id="f15.5"></td>
+          <td id="sa15.5"></td>
+          <td id="su15.5"></td>
+        </tr>
+        <tr id="16">
+          <td class="headcol">16:00</td>
+          <td id="m16"></td>
+          <td id="tu16"></td>
+          <td id="w16"></td>
+          <td id="th16"></td>
+          <td id="f16"></td>
+          <td id="sa16"></td>
+          <td id="su16"></td>
+        </tr>
+        <tr id="16.5">
+          <td class="headcol"></td>
+          <td id="m16.5"></td>
+          <td id="tu16.5"></td>
+          <td id="w16.5"></td>
+          <td id="th16.5"></td>
+          <td id="f16.5"></td>
+          <td id="sa16.5"></td>
+          <td id="su16.5"></td>
+        </tr>
+        <tr id="17">
+          <td class="headcol">17:00</td>
+          <td id="m17"></td>
+          <td id="tu17"></td>
+          <td id="w17"></td>
+          <td id="th17"></td>
+          <td id="f17"></td>
+          <td id="sa17"></td>
+          <td id="su17"></td>
+        </tr>
+        <tr id="17.5">
+          <td class="headcol"></td>
+          <td id="m17.5"></td>
+          <td id="tu17.5"></td>
+          <td id="w17.5"></td>
+          <td id="th17.5"></td>
+          <td id="f17.5"></td>
+          <td id="sa17.5"></td>
+          <td id="su17.5"></td>
+        </tr>
+        <tr id="18">
+          <td class="headcol">18:00</td>
+          <td id="m18"></td>
+          <td id="tu18"></td>
+          <td id="w18"></td>
+          <td id="th18"></td>
+          <td id="f18"></td>
+          <td id="sa18"></td>
+          <td id="su18"></td>
+        </tr>
+        <tr id="18.5">
+          <td class="headcol"></td>
+          <td id="m18.5"></td>
+          <td id="tu18.5"></td>
+          <td id="w18.5"></td>
+          <td id="th18.5"></td>
+          <td id="f18.5"></td>
+          <td id="sa18.5"></td>
+          <td id="su18.5"></td>
+        </tr>
+        <tr id="19">
+          <td class="headcol">19:00</td>
+          <td id="m19"></td>
+          <td id="tu19"></td>
+          <td id="w19"></td>
+          <td id="th19"></td>
+          <td id="f19"></td>
+          <td id="sa19"></td>
+          <td id="su19"></td>
+        </tr>
+        <tr id="19.5">
+          <td class="headcol"></td>
+          <td id="m19.5"></td>
+          <td id="tu19.5"></td>
+          <td id="w19.5"></td>
+          <td id="th19.5"></td>
+          <td id="f19.5"></td>
+          <td id="sa19.5"></td>
+          <td id="su19.5"></td>
+        </tr>
+        <tr id="20">
+          <td class="headcol">20:00</td>
+          <td id="m20"></td>
+          <td id="tu20"></td>
+          <td id="w20"></td>
+          <td id="th20"></td>
+          <td id="f20"></td>
+          <td id="sa20"></td>
+          <td id="su20"></td>
+        </tr>
+        <tr id="20.5">
+          <td class="headcol"></td>
+          <td id="m20.5"></td>
+          <td id="tu20.5"></td>
+          <td id="w20.5"></td>
+          <td id="th20.5"></td>
+          <td id="f20.5"></td>
+          <td id="sa20.5"></td>
+          <td id="su20.5"></td>
+        </tr>
+        <tr id="21">
+          <td class="headcol">21:00</td>
+          <td id="m21"></td>
+          <td id="tu21"></td>
+          <td id="w21"></td>
+          <td id="th21"></td>
+          <td id="f21"></td>
+          <td id="sa21"></td>
+          <td id="su21"></td>
+        </tr>
+        <tr id="21.5">
+          <td class="headcol"></td>
+          <td id="m21.5"></td>
+          <td id="tu21.5"></td>
+          <td id="w21.5"></td>
+          <td id="th21.5"></td>
+          <td id="f21.5"></td>
+          <td id="sa21.5"></td>
+          <td id="su21.5"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<footer class="footer mt-auto py-3" th:fragment="footer">
+  <div class="container-fluid">
+            <span class="text-muted">
+                <script>
+                    document.write(new Date(Date.UTC(2021, 3, 20)).toLocaleDateString())
+                </script> - Adam Majbour-Majek, Bartłomiej Rzepka, Dominik Motyka
+            </span>
+  </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous">
+</script>
+
+<script th:src="@{/js/calendar.js}"></script>
+
+<script src="https://kit.fontawesome.com/cfe1d61e0f.js" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+</body>
+
+</html>

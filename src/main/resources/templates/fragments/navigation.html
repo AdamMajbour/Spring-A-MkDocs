@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nawigacja</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navigation">
+        <a class="navbar-brand" th:href="@{/}">Aplikacja treningowa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li th:class="${activePage == 'registration'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:href="@{/rejestracja}">Rejestracja</a>
+                </li>
+                <li th:class="${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:href="@{/logowanie}">Logowanie</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</body>
+
+</html>

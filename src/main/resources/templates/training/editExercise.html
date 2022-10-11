@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" class="h-100">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Strona startowa</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{css/training/style.css}">
+</head>
+
+<body class="d-flex flex-column h-100">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navigation">
+    <a class="navbar-brand" th:href="@{/loginHome}">Aplikacja treningowa</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+
+            <li th:class="${activePage == 'registration'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/rejestracja}">Ćwiczenia</a>
+            </li>
+            <li class="dropdown ${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link dropbtn" th:href="@{/treningi}">Treningi</a>
+            </li>
+            <li class="dropdown ${activePage == 'login'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/ankiety}">Ankiety treningowe</a>
+            </li>
+            <li th:class="${activePage == 'registration'} ? 'nav-item active' : 'nav-item'">
+                <a id="userSettings" class="nav-link" th:href="@{/rejestracja}">Ustawienia konta</a>
+            </li>
+            <a th:href="@{/konto}">
+                <i id="userIcon" class="fas fa-user-alt" style="font-size:30px"></i>
+            </a>
+
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <form class="form" th:action="'/treningi/trening='+${trainingId}+'/cwiczenie='+${exerciseInfo.id}" th:object="${parameters}" method="post">
+        <div class="form-group">
+            <label for="exerciseName">Nazwa ćwiczenia</label>
+            <h3  id="exerciseName" th:text="${exerciseInfo.name}"></h3>
+        </div>
+        <div class="form-group">
+            <label for="exerciseDescriprion">Opis ćwiczenia</label>
+            <h3  id="exerciseDescriprion" th:text="${exerciseInfo.description}"></h3>
+        </div>
+        <div id="accordion">
+            <th:block th:each="series, seriesiter : ${exerciseInfo.seriesInfos}">
+                <div class="card" th:id="'series'+${seriesiter.count}">
+                    <div class="card-header" th:id="'heading-'+${seriesiter.count}">
+                        <h5 class="mb-0">
+                            <a class="collapsed" role="button" data-toggle="collapse" th:href="'#collapse-'+${seriesiter.count}" aria-expanded="false" th:aria-controls="'collapse-1'+${seriesiter.count}" th:text="'Seria '+${seriesiter.count}">
+                            </a>
+                            <a class="btn btn-danger modify-button" th:href="'/treningi/usuwanie/trening='+${trainingId}+'/cwiczenie=' + ${exerciseInfo.id} +'/seria='+ ${series.id}">Usuń</a>
+                        </h5>
+                    </div>
+                    <div th:id="'collapse-'+${seriesiter.count}" class="collapse" data-parent="#accordion" th:aria-labelledby="'heading-'+${seriesiter.count}">
+                        <div class="card-body">
+                            <th:block th:each="parameter : ${series.parameterInfoList}">
+                                <a th:text="${parameter.name}">: </a>
+                                <a th:text="${parameter.count}"></a>
+                                <a>     </a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <div class="card">
+                <div class="card-header" id="heading-99">
+                    <h5 class="mb-0">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-99" aria-expanded="false" aria-controls="collapse-99">
+                            +
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapse-99" class="collapse" data-parent="#accordion" aria-labelledby="heading-99">
+                    <div class="card-body">
+                        <div id="Powtórzenia" class="parameters-list" hidden>
+                            <a>Powtórzenia: <input type="number" th:field="${parameters.repsCount}"></a>
+                        </div>
+                        <div id="Obciążenie" class="parameters-list" hidden>
+                            <a>Ciężar: <input type="number" th:field="${parameters.weightCount}"> kg</a>
+                        </div>
+                        <div id="Czas" class="parameters-list" hidden>
+                            <a>Czas: <input type="number" th:field="${parameters.timeCount}"> min</a>
+                        </div>
+                        <div id="Dystans" class="parameters-list" hidden>
+                            <a>Dystans: <input type="number" th:field="${parameters.distanceCount}"> km</a>
+                        </div>
+                        <div id="Kalorie spalane" class="parameters-list" hidden>
+                            <a>Kalorie: <input type="number" th:field="${parameters.caloriesCount}"> kcal</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="add"></label>
+                            <input class="form-control btn-succes " id="add" type="submit" value="Dodaj Serię" name="action"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+<footer class="footer mt-auto py-3" th:fragment="footer">
+    <div class="container-fluid">
+            <span class="text-muted">
+                <script>
+                    document.write(new Date(Date.UTC(2021, 3, 20)).toLocaleDateString())
+                </script> - Adam Majbour-Majek, Bartłomiej Rzepka, Dominik Motyka
+            </span>
+    </div>
+</footer>
+
+
+
+<script type="text/javascript" th:inline="javascript">
+
+    var theList = [[${seriesData}]]
+    for (i = 0; i < theList.length; i++) {
+        document.getElementById(theList[i].name).hidden=false;
+    }
+
+</script>
+
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo " crossorigin="anonymous ">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js " integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1 " crossorigin="anonymous ">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM " crossorigin="anonymous ">
+</script>
+
+
+<script src="https://kit.fontawesome.com/cfe1d61e0f.js " crossorigin="anonymous "></script>
+
+</body>
+
+</html>

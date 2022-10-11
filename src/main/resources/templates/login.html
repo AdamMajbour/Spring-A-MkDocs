@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie</title>
+    <link rel="stylesheet" th:href = "@{/css/registration_styles.css}" />
+    <link rel="stylesheet" th:href = "@{/css/main.css}" />
+</head>
+
+<body>
+
+<!-- <div th:replace="~{fragments/navigation :: navigation}"></div> -->
+
+<div class="center">
+    <div class=title>Logowanie</div>
+    <form class="form" th:action="@{/logowanie}" th:object="${loginData}" method="post">
+        <div class="text_box">
+            <!--            <label for="name">*Podaj nazwę użytkownika:</label>-->
+            <input type="text" placeholder="login/e-mail" id="login" th:field="*{login}" >
+            <a type="text" >ERR</a>
+        </div>
+        <div class="text_box">
+            <!--            <label for="password">*Podaj hasło:</label>-->
+            <input type="password" placeholder="hasło" id="password" th:field="*{password}" >
+            <a type="text" >ERR</a>
+        </div>
+        <input class="button" type="button" value="Zaloguj się" id="sub-button">
+        <div class="text_box">
+            <span type="text" th:text="${errMessage}"></span>
+        </div>
+        <input class="submit_button" type="submit" id="submit">
+        <div class="have_account">Nie masz jeszcze konta?
+            <a href="rejestracja">Zarejestruj się</a>
+        </div>
+        <div class="back-home">
+            <a href="http://localhost:8081">Wróć do strony głównej</a>
+        </div>
+    </form>
+</div>
+
+<!-- <div th:replace="~{fragments/footer :: footer}"></div> -->
+
+<script type="text/javascript" th:src="@{/js/login_validation.js}"></script>
+</body>
+
+</html>
+
+
