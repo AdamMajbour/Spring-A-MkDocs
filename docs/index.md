@@ -1,15 +1,19 @@
-{!README.md!}
+# Welcome to MkDocs
 
-# Welcome to Lumache's documentation!
+For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
-**Lumache** (/lu\'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients. It pulls data from the
-[Open Food Facts database](https://world.openfoodfacts.org/) and offers
-a *simple* and *intuitive* API.
+## Commands
 
-Check out the [usage](usage) section for further information, including how to [install](usage#installation) the project.
+* `mkdocs new [dir-name]` - Create a new project.
+* `mkdocs serve` - Start the live-reloading docs server.
+* `mkdocs build` - Build the documentation site.
+* `mkdocs -h` - Print help message and exit.
 
-!!! note
+## Project layout
 
-    This project is under active development.
+    mkdocs.yml    # The configuration file.
+    docs/
+        index.md  # The documentation homepage.
+        ...       # Other markdown pages, images and other files.
 
+TEST TEST TEST
